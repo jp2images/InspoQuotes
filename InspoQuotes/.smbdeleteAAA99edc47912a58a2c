@@ -39,36 +39,23 @@ class QuoteTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("Rows to show:\(quotesToShow.count)")
-        /// Dynamically return the number of rows that we are planning to show.
-        return quotesToShow.count + 1
+        // #warning Incomplete implementation, return the number of rows
+        return 0
     }
     
     func loadQuotes() {
-        //quotesToShow
+//        
     }
 
-    /// This is the method that populates the cells.
+    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        /// The reuseIdentifier is the "default" identifier that was set in the storyboard. Change this to the
-        /// identifier that was set in the storyboard. QuoteCell
-        let cell = tableView.dequeueReusableCell(withIdentifier: "QuoteCell", for: indexPath)
-        
-        /// Added one additional cell row to the count list in tableView(numberOfRowsInSection)
-        /// we will use this extra row to add a custom cell with a buy more quotes option.
-        if indexPath.row < quotesToShow.count
-            // Configure the cell...
-            /// This numberOfLines property is set to 0 so that the text can wrap around to the next line.
-            cell.textLabel?.numberOfLines = 0
-            /// For each item in the quotes to show array we fill a new row to the table with the indexed quote.
-            cell.textLabel?.text = quotesToShow[indexPath.row]
-    } else {
-        
-    }
-    
-    
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+
+        // Configure the cell...
+
         return cell
     }
+    */
 
     /*
     // Override to support conditional editing of the table view.

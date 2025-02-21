@@ -27,101 +27,68 @@ class QuoteTableViewController: UITableViewController {
         "Your true success in life begins only when you make the commitment to become excellent at what you do. — Brian Tracy",
         "Believe in yourself, take on your challenges, dig deep within yourself to conquer fears. Never let anyone bring you down. You got to keep going. – Chantal Sutherland"
     ]
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadQuotes()
-        
-
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("Rows to show:\(quotesToShow.count)")
         /// Dynamically return the number of rows that we are planning to show.
         return quotesToShow.count + 1
     }
     
-    func loadQuotes() {
-        //quotesToShow
-    }
-
+    
     /// This is the method that populates the cells.
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         /// The reuseIdentifier is the "default" identifier that was set in the storyboard. Change this to the
         /// identifier that was set in the storyboard. QuoteCell
         let cell = tableView.dequeueReusableCell(withIdentifier: "QuoteCell", for: indexPath)
+        var content = cell.defaultContentConfiguration()
         
         /// Added one additional cell row to the count list in tableView(numberOfRowsInSection)
         /// we will use this extra row to add a custom cell with a buy more quotes option.
-        if indexPath.row < quotesToShow.count
+        if indexPath.row < quotesToShow.count {
             // Configure the cell...
             /// This numberOfLines property is set to 0 so that the text can wrap around to the next line.
             cell.textLabel?.numberOfLines = 0
             /// For each item in the quotes to show array we fill a new row to the table with the indexed quote.
-            cell.textLabel?.text = quotesToShow[indexPath.row]
-    } else {
-        
-    }
-    
-    
+            content.text = quotesToShow[indexPath.row]
+        } else {
+            content.textProperties.font = .systemFont(ofSize: 17, weight: .bold)
+            content.textProperties.alignment = .center
+            content.textProperties.color = .systemBlue
+            content.text = "Buy more quotes"
+            
+            /// Add an icon indicating that the cell will take the user to a new location. (Purchase)
+            cell.accessoryType = .disclosureIndicator
+        }
+        cell.contentConfiguration = content
         return cell
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     
-    
+    // MARK: - Table view delegate methods
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        /// Clicking on the last cell row, the one with the "But more,,," will equal the cell count.
+        if indexPath.row == quotesToShow.count {
+            buyPremiumQuotes()
+        }
+        /// Deslect the row to make it look more natural like a PB
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+  
+    // MARK: - In-App Purchase Methods
+    func buyPremiumQuotes() {
+        
+    }
+
     
     
     @IBAction func restorePressed(_ sender: UIBarButtonItem) {
         
     }
-
-
 }

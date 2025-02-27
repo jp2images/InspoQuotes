@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import StoreKit
 
-class QuoteTableViewController: UITableViewController {
+class QuoteTableViewController: UITableViewController /*,SKPaymentTransactionObserver*/ {
+    let productId = "dev.jeffpatterson.inspoQuotes.PremiumQuotes"
     
-    var quotesToShow = [
+    var quotesToShow = [ /// This array is a var becasue we will be add the premium quotes to it if the user purchases more.
         "Our greatest glory is not in never falling, but in rising every time we fall. — Confucius",
         "All our dreams can come true, if we have the courage to pursue them. – Walt Disney",
         "It does not matter how slowly you go as long as you do not stop. – Confucius",
@@ -30,7 +32,9 @@ class QuoteTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        /// When this is setup and there are changes to the payment then this gets called and it will call
+        /// the func paymentQueue to handle the purchase.
+        ///SKPaymentQueue.default().add(self) /// Set this class as the observer of the payment queue.
     }
     
     // MARK: - Table view data source
@@ -82,13 +86,52 @@ class QuoteTableViewController: UITableViewController {
     }
   
     // MARK: - In-App Purchase Methods
-    func buyPremiumQuotes() {
-        
-    }
-
     
+    /// This MUST be tested on a Physical device! It will not work on the simulator.
+    func buyPremiumQuotes() {
+        // if SKPaymentQueue.canMakePayments() {
+        if AppStore.canMakePayments {
+            /// Can make payments
+            print("Making a purchase")
+            /// TODO: 'SKMutablePayment' was deprecated in iOS 18.0: Use Product.purchase(confirmIn:options:)
+            let payment1 = SKMutablePayment()
+            payment1.productIdentifier = productId
+            /// TODO: 'add' was deprecated in iOS 18.0: Use Product.purchase(confirmIn:options:)
+            SKPaymentQueue.default().add(payment1)
+        } else{
+            // Can't make payments
+            print("User can't make payments")
+        }
+    }
+    
+    /// TODO: 'SKPaymentTransactionObserver' was deprecated in iOS 18.0: Use StoreKit 2 Transaction APIs
+    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+    /// TODO: 'SKPaymentTransaction' was deprecated in iOS 18.0: Use PurchaseResult from Product.purchase(confirmIn:options:)
+        for transaction in transactions {
+            print("Transaction state \(transaction.transactionState)")
+            if transaction.transactionState == .purchased {
+                // User payment successful
+                SKPaymentQueue.default().finishTransaction(transaction)
+                print("Transaction successful!")
+                showPremiumQuotes()
+            } else if transaction.transactionState == .failed {
+                // User payment failed
+                if let error = transaction.error {
+                    let errorDescription = error.localizedDescription
+                    print("Transaction failed due to error: \(errorDescription)")
+                }
+                SKPaymentQueue.default().finishTransaction(transaction)
+            }
+        }
+    }
+    
+    func showPremiumQuotes() {
+        quotesToShow.append(contentsOf: premiumQuotes)
+        tableView.reloadData() /// Reload the table view with the new quotes.
+                               /// Calls the 2 methods: numberOfRowsInSection and cellForRowAt
+    }
     
     @IBAction func restorePressed(_ sender: UIBarButtonItem) {
-        
+        buyPremiumQuotes()
     }
 }

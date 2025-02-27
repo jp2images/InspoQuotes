@@ -3,11 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1F713C022D5F684D0089E0B1 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F713C012D5F684D0089E0B1 /* StoreKit.framework */; };
+		1F0E8A872D6F37A900C8E35A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F713C012D5F684D0089E0B1 /* StoreKit.framework */; };
 		AD18A83E21285CAF00F6BF05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD18A83D21285CAF00F6BF05 /* AppDelegate.swift */; };
 		AD18A84321285CAF00F6BF05 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD18A84121285CAF00F6BF05 /* Main.storyboard */; };
 		AD18A84521285CB000F6BF05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD18A84421285CB000F6BF05 /* Assets.xcassets */; };
@@ -33,7 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F713C022D5F684D0089E0B1 /* StoreKit.framework in Frameworks */,
+				1F0E8A872D6F37A900C8E35A /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,7 +116,7 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1000;
 				LastUpgradeCheck = 1620;
-				ORGANIZATIONNAME = "London App Brewery";
+				ORGANIZATIONNAME = jeffpatterson.dev;
 				TargetAttributes = {
 					AD18A83921285CAF00F6BF05 = {
 						CreatedOnToolsVersion = 10.0;
@@ -125,7 +125,6 @@
 				};
 			};
 			buildConfigurationList = AD18A83521285CAF00F6BF05 /* Build configuration list for PBXProject "InspoQuotes" */;
-			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -133,6 +132,7 @@
 				Base,
 			);
 			mainGroup = AD18A83121285CAF00F6BF05;
+			preferredProjectObjectVersion = 77;
 			productRefGroup = AD18A83B21285CAF00F6BF05 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -315,6 +315,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LH8R488V9H;
 				INFOPLIST_FILE = InspoQuotes/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -334,6 +335,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LH8R488V9H;
 				INFOPLIST_FILE = InspoQuotes/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

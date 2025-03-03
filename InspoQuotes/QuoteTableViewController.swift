@@ -122,10 +122,9 @@ class QuoteTableViewController: UITableViewController /*,SKPaymentTransactionObs
             print("Transaction state \(transaction.transactionState)")
             if transaction.transactionState == .purchased {
                 // User payment successful
-                SKPaymentQueue.default().finishTransaction(transaction)
                 print("Transaction successful!")
                 showPremiumQuotes()
-                UserDefaults.standard.set(true, forKey: productId)
+                SKPaymentQueue.default().finishTransaction(transaction)
                 //tableView.reloadData() /// Reload the table view with the new quotes.
                                        /// Calls the 2 methods: numberOfRowsInSection and cellForRowAt
             } else if transaction.transactionState == .failed {
@@ -135,12 +134,25 @@ class QuoteTableViewController: UITableViewController /*,SKPaymentTransactionObs
                     print("Transaction failed due to error: \(errorDescription)")
                 }
                 SKPaymentQueue.default().finishTransaction(transaction)
+                
+            } else if transaction.transactionState == .restored {
+                showPremiumQuotes()
+                print("Transaction restored")
+                
+                /// Hide the restore button once the restore is successful.
+                navigationItem.setRightBarButton(nil, animated: true)
+                
+                SKPaymentQueue.default().finishTransaction(transaction)
             }
+            
         }
     }
     
     /// TODO This doens't work. Doesn't seem to be called
     func showPremiumQuotes() {
+        /// Save the purchase state of the user before reloading the data.
+        UserDefaults.standard.set(true, forKey: productId)
+        
         quotesToShow.append(contentsOf: premiumQuotes)
         tableView.reloadData() /// Reload the table view with the new quotes.
                                /// Calls the 2 methods: numberOfRowsInSection and cellForRowAt
@@ -160,6 +172,6 @@ class QuoteTableViewController: UITableViewController /*,SKPaymentTransactionObs
     }
     
     @IBAction func restorePressed(_ sender: UIBarButtonItem) {
-        //buyPremiumQuotes()
+        SKPaymentQueue.default().restoreCompletedTransactions()
     }
 }
